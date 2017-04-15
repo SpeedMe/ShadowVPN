@@ -149,7 +149,6 @@ typedef struct {
   htons(iphdr->daddr & 0xffff); \
   verify = (verify>>16) + (verify&0xffff); \
   sum = ntohs(verify); \
-  //logf("cksum verify:0x%x, checksum:%x", verify, sum); \
   if(sum == -1){ \
     fcc = 0; \
   } else { \
