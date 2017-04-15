@@ -149,7 +149,7 @@ typedef struct {
   htons(iphdr->daddr & 0xffff); \
   verify = (verify>>16) + (verify&0xffff); \
   sum = ntohs(verify); \
-  logf("cksum verify:0x%x, checksum:%x", verify, sum); \
+  //logf("cksum verify:0x%x, checksum:%x", verify, sum); \
   if(sum == -1){ \
     fcc = 0; \
   } else { \
@@ -184,6 +184,8 @@ int nat_fix_upstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
   }
   // print_hex_memory(iphdr, buflen - SHADOWVPN_USERTOKEN_LEN);
 
+  logf("us user [%s] traffic [%lu]",client->user_token,buflen);
+  
   // save source address
   client->source_addr.addrlen =  addrlen;
   memcpy(&client->source_addr.addr, addr, addrlen);
@@ -249,7 +251,7 @@ int nat_fix_downstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
     errf("nat: client not found for given user ip");
     return -1;
   }
-
+  
   // print_hex_memory(client->user_token, SHADOWVPN_USERTOKEN_LEN);
 
   // update dest address
@@ -259,6 +261,8 @@ int nat_fix_downstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
   // copy usertoken back
   memcpy(buf, client->user_token, SHADOWVPN_USERTOKEN_LEN);
 
+  logf("ds user [%s] traffic [%lu]",client->user_token,buflen);
+  
   int32_t acc = 0;
 
   // add old, sub new
