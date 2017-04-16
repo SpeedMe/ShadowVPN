@@ -46,9 +46,9 @@ int nat_init(nat_ctx_t *ctx, shadowvpn_args_t *args) {
 
     struct in_addr in;
     in.s_addr = client->output_tun_ip;
-    logf("assigning %s to user %16llx",
+    logf("assigning %s to user %s",
          inet_ntoa(in),
-         htobe64(*((uint64_t *)args->user_tokens[i])));
+         args->user_tokens[i]);
 
     // add to hash: ctx->token_to_clients[user_token] = client
     HASH_ADD(hh1, ctx->token_to_clients, user_token,
@@ -177,9 +177,7 @@ int nat_fix_upstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
     return -1;
   }
   if (buflen > 1400){
-    struct in_addr in;
-    in.s_addr = client->output_tun_ip;
-    logf("us user [%s] traffic [%lu]",inet_ntoa(in),buflen);
+    logf("us user [%s] traffic [%lu]",client->user_token,buflen);
   }
   // print_hex_memory(iphdr, buflen - SHADOWVPN_USERTOKEN_LEN);
 
@@ -250,9 +248,7 @@ int nat_fix_downstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
   }
 
   if (buflen > 1400){
-    struct in_addr in;
-    in.s_addr = client->output_tun_ip;
-    logf("ds user [%s] traffic [%lu]",inet_ntoa(in),buflen);
+    logf("ds user [%s] traffic [%lu]",client->user_token,buflen);
   }
   
   // print_hex_memory(client->user_token, SHADOWVPN_USERTOKEN_LEN);
