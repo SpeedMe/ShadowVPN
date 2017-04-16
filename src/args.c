@@ -139,6 +139,11 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
   args->user_tokens = calloc(len, 8);
   bzero(args->user_tokens, 8 * len);
   value = start;
+  while ((args->user_tokens[i] = strtok(value, ",")) != NULL) {
+    logf("user %s",args->user_tokens[i]);
+		i++;
+	}
+  /*
   while (*value) {
     int has_next = 0;
     sp_pos = strchr(value, ',');
@@ -165,6 +170,7 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
       break;
     }
   }
+  */
   free(start);
   return 0;
 }
