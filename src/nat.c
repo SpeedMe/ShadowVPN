@@ -48,7 +48,7 @@ int nat_init(nat_ctx_t *ctx, shadowvpn_args_t *args) {
     in.s_addr = client->output_tun_ip;
     logf("assigning %s to user %s",
          inet_ntoa(in),
-         client->user_token - SHADOWVPN_USERTOKEN_LEN);
+         client->user_token);
 
     // add to hash: ctx->token_to_clients[user_token] = client
     HASH_ADD(hh1, ctx->token_to_clients, user_token,
