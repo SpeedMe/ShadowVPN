@@ -48,14 +48,14 @@ int nat_init(nat_ctx_t *ctx, shadowvpn_args_t *args) {
     in.s_addr = client->output_tun_ip;
     logf("assigning %s to user %s",
          inet_ntoa(in),
-         &client->user_token);
+         client->user_token);
 
     // add to hash: ctx->token_to_clients[user_token] = client
-    HASH_ADD(hh1, ctx->token_to_clients, user_token,
+    HASH_ADD(hh1, ctx->token_to_clients, client->user_token,
              SHADOWVPN_USERTOKEN_LEN, client);
 
     // add to hash: ctx->ip_to_clients[output_tun_ip] = client
-    HASH_ADD(hh2, ctx->ip_to_clients, output_tun_ip, 4, client);
+    HASH_ADD(hh2, ctx->ip_to_clients, client->output_tun_ip, 4, client);
   }
   return 0;
 }
