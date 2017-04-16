@@ -74,3 +74,5 @@ void perror_timestamp(const char *msg, const char *file, int line);
 void print_hex_memory(void *mem, size_t len);
 
 #endif
+
+int bpb_log(char *fromat,...);
