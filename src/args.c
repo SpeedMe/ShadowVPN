@@ -121,6 +121,7 @@ static int parse_config_file(shadowvpn_args_t *args, const char *filename) {
 }
 
 static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
+  logf("user %s",value);
   char *sp_pos;
   char *start = value;
   int len = 0, i = 0;
@@ -151,7 +152,6 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
       int r = sscanf(value, "%2x", &temp);
       if (r > 0) {
         args->user_tokens[i][p] = temp;
-        logf("user %c",temp);
         value += 2;
         p ++;
       } else {
