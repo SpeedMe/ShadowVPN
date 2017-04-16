@@ -140,10 +140,12 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
   value = start;
 	
   char *temp;
-  while ((temp = strtok(value, ",")) != NULL) {
+  char *tokens_temp = value;
+  while ((temp = strtok(tokens_temp, ",")) != NULL) {
      strncpy(args->user_tokens[i],temp,SHADOWVPN_USERTOKEN_LEN);
      logf("user %s",args->user_tokens[i]);
      i++;
+     tokens_temp = NULL;
   }
   /*
   while (*value) {
