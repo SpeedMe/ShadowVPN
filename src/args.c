@@ -157,6 +157,7 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
         break;
       }
     }
+    logf("user %s",args->user_tokens[i]);
     i++;
     if (has_next) {
       value = sp_pos + 1;
