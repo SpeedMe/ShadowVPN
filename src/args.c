@@ -121,7 +121,6 @@ static int parse_config_file(shadowvpn_args_t *args, const char *filename) {
 }
 
 static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
-  logf("user %s",value);
   char *sp_pos;
   char *start = value;
   int len = 0, i = 0;
@@ -139,10 +138,13 @@ static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
   args->user_tokens = calloc(len, 8);
   bzero(args->user_tokens, 8 * len);
   value = start;
-  while ((args->user_tokens[i] = strtok(value, ",")) != NULL) {
-    logf("user %s",args->user_tokens[i]);
-		i++;
-	}
+	
+  char *temp;
+  while ((temp = strtok(value, ",")) != NULL) {
+     strncpy(args->user_tokens[i],temp,SHADOWVPN_USERTOKEN_LEN);
+     logf("user %s",args->user_tokens[i]);
+     i++;
+  }
   /*
   while (*value) {
     int has_next = 0;
